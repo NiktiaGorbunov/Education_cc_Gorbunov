@@ -14,8 +14,8 @@ Window::Window(int w, int h)
 {
 
 	_window = std::shared_ptr<SDL_Window>(
-				SDL_CreateWindow("Open GL Windows", SDL_WINDOWPOS_CENTERED_DISPLAY(1),
-						SDL_WINDOWPOS_CENTERED_DISPLAY(1), w, h,
+				SDL_CreateWindow("Open GL Windows", SDL_WINDOWPOS_CENTERED,
+						SDL_WINDOWPOS_CENTERED, w, h,
 						SDL_WINDOW_OPENGL), SDL_DestroyWindow);
 		if (_window == nullptr) {
 			throw std::runtime_error(
