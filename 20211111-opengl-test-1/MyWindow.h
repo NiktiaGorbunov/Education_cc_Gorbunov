@@ -21,8 +21,14 @@ public:
 
 protected:
 	double _seconds {0.0};
+	double _minutes {0.0};
+	double _hours {0.0};
+	double _position_camer_x {0.0};
+	double _position_camer_y {0.0};
+	double _angle_rotation_camera {0.0};
 
 	void draw_clock();
+	void moving_camera();
 
 public:
 	MyWindow();
