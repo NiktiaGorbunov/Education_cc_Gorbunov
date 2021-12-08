@@ -20,7 +20,7 @@
 
 
 MyWindow::MyWindow()
-:Window(WINDDOW_WIDTH, WINDDOW_HEIGHT)
+:Window(WINDOW_WIDTH, WINDOW_HEIGHT)
 {
 	SDL_SetWindowTitle(_window.get(), "My OpenGL Window");
 

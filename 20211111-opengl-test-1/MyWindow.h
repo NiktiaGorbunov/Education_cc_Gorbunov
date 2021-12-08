@@ -12,8 +12,8 @@
 
 class MyWindow: public Window {
 public:
-	static constexpr int WINDDOW_WIDTH = 1080;
-	static constexpr int WINDDOW_HEIGHT = 720;
+	static constexpr int WINDOW_WIDTH = 1080;
+	static constexpr int WINDOW_HEIGHT = 720;
 
 	virtual void update();
 	virtual void render();
