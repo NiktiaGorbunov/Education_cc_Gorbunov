@@ -11,12 +11,16 @@
 #include "Window.h"
 #include "Model.h"
 #include "Texture.h"
+#include "Primitives.h"
 
 
 class HouseWindow: public Window {
 private:
 	Model _house_model;
 	Texture _house_texture {"house_texture.png"};
+	Texture _cylinder_texture {"cylinder_template.png"};
+	Texture _cone_texture {"con_template.png"};
+	Texture _earth_texture {"earth_daymap.jpg"};
 	double _angle = 0.0;
 public:
 	static constexpr int WINDOW_WIDTH = 1080;

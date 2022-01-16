@@ -29,10 +29,27 @@ void HouseWindow::render() {
 			  0.0, 0.0, 1.0);
 	glRotated(_angle, 0.0, 0.0, 1.0);
 
-	Texture::enable();
-	_house_texture.bind();
+	Texture::disable();
+//	_cylinder_texture.bind();
+//	draw_prism(16, 1, 2); // рисование призмы
+//	draw_cylinder(12, 1, 2); // рисование цилиндра
+//	_cone_texture.bind();
+//	draw_pyramid(24, 1, 2); //рисование квандрата
+//	draw_cone(16, 1, 2); //рисованик консуа
+//	_earth_texture.bind();
+//	draw_disco_ball(16, 8, 2.0); // рисование диско-шара
+//	draw_sphere(24, 8, 2.0);
 
-	_house_model.draw();
+// рисование текстурированного домика
+//	_house_texture.bind();
+//	_house_model.draw();
+
+	/*
+	 *  плосколсть / кривая повезрность белого цвета
+	 *  в центре ёлка, ствол - цилиндр, ветки - конусы
+	 *  вокруг ёлки несколько снеговиков: 3 сферы, нос - конус, руки - цилиндры
+	 *
+	 */
 }
 
 void HouseWindow::setupGL() {
