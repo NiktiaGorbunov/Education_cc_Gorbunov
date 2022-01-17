@@ -32,8 +32,33 @@ void HouseWindow::render() {
 			  center.x, center.y, center.z,
 			  0.0, 0.0, 1.0);
 
-	Texture::disable();
+	//сделаем небо
+	glPushMatrix();
+	glTranslated(eye.x, eye.y, eye.z);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_FOG);
+	Texture::enable();
+	_stars_texture.bind();
+	draw_sphere(32, 16, 100.0);
+	glEnable(GL_LIGHTING);
 
+	//сделаем луну
+	GLfloat white[4] {1.f, 1.f, 1.f, 1.f};
+	GLfloat black[4] {1.f, 1.f, 1.f, 1.f};
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, white);
+	glTranslated(12.f, 12.f, 90.f );
+	glRotated(45.0, 0.0f, 1.0f, 0.0f);
+	_moon_texture.bind();
+	draw_sphere(8, 4, 3.0);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, black);
+
+	glEnable(GL_FOG);
+
+	glPopMatrix();
+
+
+	Texture::disable();
 
 
 //	_cylinder_texture.bind();
@@ -97,6 +122,14 @@ void HouseWindow::setupGL() {
 	glEnable(GL_TEXTURE);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0); //отвечает за освещение
+	glEnable(GL_FOG);
+
+//	GLfloat fog_color[4]{0.3f, 0.3f, 0.3f, 1.0f};
+
+	glFogf(GL_FOG_END , 70.f);
+	glFogf(GL_FOG_DENSITY, 0.2f);
+	glFogf(GL_FOG_MODE, GL_LINEAR);
+//	glFogfv(GL_FOG_COLOR, fog_color);
 
 	glClearColor(0.1f, 0.25f, 0.45f, 1.0f);
 
@@ -113,6 +146,10 @@ void HouseWindow::handle_event(const SDL_Event &event)
 	case SDL_MOUSEMOTION:
 		_player.turn_phi(-event.motion.xrel * Player::TURN_ANGLE);
 		_player.turn_theta(event.motion.yrel * Player::TURN_ANGLE);
+		break;
+	case SDL_KEYDOWN:
+		if (event.key.keysym.scancode == SDL_SCANCODE_F)
+			_player.toggle_fly();
 		break;
 
 	}

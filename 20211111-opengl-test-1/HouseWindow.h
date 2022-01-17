@@ -22,6 +22,8 @@ private:
 	Texture _cylinder_texture {"cylinder_template.png"};
 	Texture _cone_texture {"con_template.png"};
 	Texture _earth_texture {"earth_daymap.jpg"};
+	Texture _stars_texture {"stars.jpg"};
+	Texture _moon_texture {"moon.jpg"};
 
 	double _angle = 0.0;
 	Player _player {glm::vec3(3.f, 3.f, 3.0f), 0.f, 1.6f};
