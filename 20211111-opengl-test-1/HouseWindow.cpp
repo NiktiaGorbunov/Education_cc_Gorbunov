@@ -14,6 +14,7 @@ HouseWindow::HouseWindow()
  _house_model("House.txt")
 {
 	SDL_SetWindowTitle(_window.get(), "House Window");
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 }
 
 void HouseWindow::update() {
@@ -22,12 +23,14 @@ void HouseWindow::update() {
 
 void HouseWindow::render() {
 
+	auto eye = _player.position();
+	auto center = _player.center();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gluLookAt(6.0, 6.0, 4.5,
-			  0.0, 0.0, 2.0,
+	gluLookAt(eye.x, eye.y, eye.z,
+			  center.x, center.y, center.z,
 			  0.0, 0.0, 1.0);
-	glRotated(_angle, 0.0, 0.0, 1.0);
 
 	Texture::disable();
 
@@ -50,6 +53,7 @@ void HouseWindow::render() {
 	/*
 	 *  плосколсть / кривая повезрность белого цвета
 	 *  в центре ёлка, ствол - цилиндр, ветки - конусы
+	 *  где-то домики поставить
 	 *  вокруг ёлки несколько снеговиков: 3 сферы, нос - конус, руки - цилиндры
 	 *
 	 */
@@ -58,10 +62,12 @@ void HouseWindow::render() {
 //	glDisable(GL_LIGHTING);
 //	glEnable(GL_LIGHTING);
 
+
+
 	glBegin(GL_QUADS);
 	glNormal3d(0.0, 0.0, 1.0);
-	for(int i = -15; i < 15; ++i){
-		for(int j = -15; j <= 15; ++j){
+	for(int i = -150; i < 150; ++i){
+		for(int j = -150; j <= 150; ++j){
 				glVertex3d(j+0, j+0, 0.0);
 				glVertex3d(j+1, j+0, 0.0);
 				glVertex3d(j+1, j+1, 0.0);
@@ -72,6 +78,7 @@ void HouseWindow::render() {
 
 
 	glPushMatrix();
+	glRotated(_angle, 0.0, 0.0, 1.0);
 
 	glTranslated(0.0, 0.0, 0.75);
 	draw_sphere(16, 10, 1.0);
@@ -96,6 +103,25 @@ void HouseWindow::setupGL() {
 	double aspect_ratio = double(width()) / double(height());
 
 	glMatrixMode(GL_PROJECTION);
-	gluPerspective(45.0, aspect_ratio, 0.1, 20.0);
+	gluPerspective(45.0, aspect_ratio, 0.1, 120.0);
 	glMatrixMode(GL_MODELVIEW);
+}
+
+void HouseWindow::handle_event(const SDL_Event &event)
+{
+	switch(event.type){
+	case SDL_MOUSEMOTION:
+		_player.turn_phi(-event.motion.xrel * Player::TURN_ANGLE);
+		_player.turn_theta(event.motion.yrel * Player::TURN_ANGLE);
+		break;
+
+	}
+}
+
+void HouseWindow::handle_keys(const Uint8 *keys)
+{
+	if(keys[SDL_SCANCODE_W]) _player.move_forward();
+	if(keys[SDL_SCANCODE_S]) _player.move_backward();
+	if(keys[SDL_SCANCODE_A]) _player.move_left();
+	if(keys[SDL_SCANCODE_D]) _player.move_right();
 }
