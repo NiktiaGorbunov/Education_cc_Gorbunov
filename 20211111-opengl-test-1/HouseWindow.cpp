@@ -25,11 +25,14 @@ void HouseWindow::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	gluLookAt(6.0, 6.0, 4.5,
-			  0.0, 0.0, 1.5,
+			  0.0, 0.0, 2.0,
 			  0.0, 0.0, 1.0);
 	glRotated(_angle, 0.0, 0.0, 1.0);
 
 	Texture::disable();
+
+
+
 //	_cylinder_texture.bind();
 //	draw_prism(16, 1, 2); // рисование призмы
 //	draw_cylinder(12, 1, 2); // рисование цилиндра
@@ -50,6 +53,35 @@ void HouseWindow::render() {
 	 *  вокруг ёлки несколько снеговиков: 3 сферы, нос - конус, руки - цилиндры
 	 *
 	 */
+
+	//снеговик
+//	glDisable(GL_LIGHTING);
+//	glEnable(GL_LIGHTING);
+
+	glBegin(GL_QUADS);
+	glNormal3d(0.0, 0.0, 1.0);
+	for(int i = -15; i < 15; ++i){
+		for(int j = -15; j <= 15; ++j){
+				glVertex3d(j+0, j+0, 0.0);
+				glVertex3d(j+1, j+0, 0.0);
+				glVertex3d(j+1, j+1, 0.0);
+				glVertex3d(j+0, j+1, 0.0);
+			}
+	}
+	glEnd();
+
+
+	glPushMatrix();
+
+	glTranslated(0.0, 0.0, 0.75);
+	draw_sphere(16, 10, 1.0);
+	glTranslated(0.0, 0.0, 1.25);
+	draw_sphere(12, 8, 0.7);
+	glTranslated(0.0, 0.0, 0.9);
+	draw_sphere(10, 6, 0.4);
+	glRotated(90.0, 0.0, 1.0, 0.0);
+	draw_cone(8, 0.1, 1.0);
+	glPopMatrix();
 }
 
 void HouseWindow::setupGL() {
